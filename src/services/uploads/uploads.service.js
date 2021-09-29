@@ -21,7 +21,15 @@ module.exports = function (app) {
   };
 
   // Initialize our service with any options it requires
-  app.use('/uploads', upload.single('uri'), (req, res, next) => {
+  app.use('/uploads', (req, res, next) => {
+    upload.single('uri')(req, res, (err) => {
+      if (err) {
+        console.log(err);
+        throw err;
+      }
+      next();
+    });
+  }, (req, res, next) => {
     req.feathers.file = req.file;
     next();
   }, new Uploads(options, app));
