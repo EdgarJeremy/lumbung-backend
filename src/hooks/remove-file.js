@@ -6,7 +6,21 @@ const fs = require('fs');
 
 module.exports = (options = {}) => {
   return async context => {
-    fs.unlinkSync(context.result.path);
+    if (context.params.provider) {
+      if (context.type === 'before') {
+        const files = (await context.app.service('files').find({
+          query: {
+            fileId: context.id
+          }
+        })).data;
+        for (let i = 0; i < files.length; i++) {
+          fs.unlinkSync(files[i].path);
+          await context.app.service('files').remove(files[i].id);
+        }
+      } else if (context.type === 'after') {
+        fs.unlinkSync(context.result.path);
+      }
+    }
     return context;
   };
 };

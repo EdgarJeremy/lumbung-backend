@@ -4,20 +4,22 @@ const attachUser = require('../../hooks/attach-user');
 
 const removeFile = require('../../hooks/remove-file');
 
+const attachQualities = require('../../hooks/attach-qualities');
+
 module.exports = {
   before: {
-    all: [ authenticate('jwt') ],
+    all: [authenticate('jwt')],
     find: [attachUser()],
     get: [attachUser()],
     create: [],
     update: [],
     patch: [],
-    remove: []
+    remove: [removeFile()]
   },
 
   after: {
     all: [],
-    find: [],
+    find: [attachQualities()],
     get: [],
     create: [],
     update: [],

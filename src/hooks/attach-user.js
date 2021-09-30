@@ -7,7 +7,9 @@ module.exports = (options = {}) => {
     const sequelize = context.app.get('sequelizeClient');
     context.params.sequelize = {
       nest: true,
-      include: [{ model: sequelize.models.users, attributes: { exclude: ['password'] } }]
+      include: [
+        { model: sequelize.models.users, attributes: { exclude: ['password'] } },
+      ]
     }
     return context;
   };

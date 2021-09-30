@@ -16,7 +16,7 @@ module.exports = function (app) {
       allowNull: false
     },
     size: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       allowNull: false
     },
     path: {
@@ -34,6 +34,7 @@ module.exports = function (app) {
   // eslint-disable-next-line no-unused-vars
   files.associate = function (models) {
     files.belongsTo(models.users);
+    files.belongsTo(models.files);
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
   };

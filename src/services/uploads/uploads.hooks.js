@@ -2,6 +2,8 @@ const { authenticate } = require('@feathersjs/authentication').hooks;
 
 const recordFile = require('../../hooks/record-file');
 
+const splitVideoQuality = require('../../hooks/split-video-quality');
+
 module.exports = {
   before: {
     all: [authenticate('jwt')],
@@ -17,7 +19,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [recordFile()],
+    create: [recordFile(), splitVideoQuality()],
     update: [],
     patch: [],
     remove: []
