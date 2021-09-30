@@ -34,12 +34,12 @@ module.exports = (options = {}) => {
     if (isVideo(file.path)) {
       const dimensions = await getDimensions(file.path);
       const fileinfo = file.filename.split('.');
-      if (dimensions.height === 1080) {
+      if (dimensions.height > 720) {
         const id720 = uuid();
         const id480 = uuid();
         swf.single(c720)(file.path, `./storage/${id720}.mp4`, recordFile(app, id720, name, '720', user, fileinfo[0]));
         swf.single(c480)(file.path, `./storage/${id480}.mp4`, recordFile(app, id480, name, '480', user, fileinfo[0]));
-      } else if (dimensions.height === 720) {
+      } else if (dimensions.height > 480 && dimensions.height <= 720) {
         const id480 = uuid();
         swf.single(c480)(file.path, `./storage/${id480}.mp4`, recordFile(app, id480, name, '480', user, fileinfo[0]));
       }
