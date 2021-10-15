@@ -15,10 +15,11 @@ exports.Specs = class Specs {
         percentage: parseFloat(cl.currentLoad.toFixed(2))
       };
     } else if (id === 'mem') {
-      return await {
-        used: os.totalmem() - os.freemem(),
-        total: os.totalmem(),
-        percentage: parseFloat((((os.totalmem() - os.freemem()) / os.totalmem()) * 100).toFixed(2))
+      const mem = await si.mem();
+      return {
+        used: mem.total - mem.available,
+        total: mem.available,
+        percentage: parseFloat((((mem.total - mem.available) / mem.available) * 100).toFixed(2))
       };
     } else if (id === 'disk') {
       const ds = await checkDiskSpace('/storage');
